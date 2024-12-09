@@ -54,7 +54,9 @@ public class Aula04 extends Aula {
 
     protected long totalEstudantesCursoAndSexo(@NonNull final Stream<Estudante> stream, @NonNull final Curso curso, final char sexo) {
         // TODO: Você precisa implementar este método. Apague estas linhas e escreva o código correto.
-        return -1;
+        long totalSexoMasculinoCurso = stream.filter(estudante -> estudante.getSexo() == sexo)
+                .count();
+        return totalSexoMasculinoCurso;
     }
 
     protected double mediaNotaTodosEstudantesCurso(@NonNull final Stream<Estudante> stream, @NonNull final Curso curso){
