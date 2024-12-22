@@ -2,8 +2,12 @@ package exercicios;
 
 import exercicios.base.Aula;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * Esta é uma classe para você poder implementar as atividades propostas no README.
@@ -28,8 +32,8 @@ public class Aula06 extends Aula {
      * Este deve ser um predicado composto usando {@link Predicate#and(Predicate)}.
      * Você deve trocar o valor armazenado ao atributo para ele seguir a regra definida acima.
      */
-    private final Predicate<Estudante> mulheresAprovadas = null; //TODO: Atribua aqui o predicado composto com o filtro indicado acima
-
+    private final Predicate<Estudante> mulheresAprovadas = n-> n.isMulher() && n.getNota()>=NOTA_MINIMA_APROVACAO; //TODO: Atribua aqui o predicado composto com o filtro indicado acima
+    private static final double NOTA_MINIMA_APROVACAO = 6.0;
     /**
      * Você pode chamar os métodos existentes e outros que você criar aqui,
      * incluir prints e fazer o que desejar neste método para conferir os valores retornados pelo seu método.
@@ -38,6 +42,11 @@ public class Aula06 extends Aula {
      */
     public Aula06() {
         //TODO: Insira chamdas das funções existentes aqui, para você conferir como estão funcionando
+        System.out.printf("Mulheres Aprovadas: %d%n", getEstudantesMulheresAprovadas().size());
+        exibirEstudantes("Mulheres Aprovadas Ordenadas por Curso e Nota:",
+                getEstudantesMulheresAprovadasOrdenadasPorCursoAndNota());
+        exibirEstudantes("Mulheres Aprovadas Ordenadas Por Curso Decrescente e Nota Crescente:",
+                getEstudantesMulheresAprovadasOrdenadasPorCursoDecrescenteAndNotaCrescente());
     }
 
     /**
@@ -57,7 +66,9 @@ public class Aula06 extends Aula {
      */
     public List<Estudante> getEstudantesMulheresAprovadas() {
         // TODO: Você precisa implementar este método. Apague estas linhas e escreva o código correto.
-        return null;
+        return estudantes.stream()
+                .filter(mulheresAprovadas)
+                .toList();
     }
 
     /**
@@ -68,7 +79,10 @@ public class Aula06 extends Aula {
      */
     public List<Estudante> getEstudantesMulheresAprovadasOrdenadasPorCursoAndNota() {
         // TODO: Você precisa implementar este método. Apague estas linhas e escreva o código correto.
-        return null;
+        return getEstudantesMulheresAprovadas().stream()
+                .sorted(Comparator.comparing(Estudante::getCurso)
+                        .thenComparing(Estudante::getNota))
+                .collect(Collectors.toUnmodifiableList());
     }
 
     /**
@@ -79,7 +93,10 @@ public class Aula06 extends Aula {
      */
     public List<Estudante> getEstudantesMulheresAprovadasOrdenadasPorCursoDecrescenteAndNotaCrescente() {
         // TODO: Você precisa implementar este método. Apague estas linhas e escreva o código correto.
-        return null;
+        return getEstudantesMulheresAprovadas().stream()
+                .sorted(Comparator.comparing(Estudante::getCurso,Comparator.reverseOrder())
+                        .thenComparing(Estudante::getNota))
+                .collect(Collectors.toUnmodifiableList());
     }
 
     /**
@@ -114,5 +131,20 @@ public class Aula06 extends Aula {
     public List<Estudante> getEstudantesMulheresAprovadasOrdenadasPorCursoCrescenteAndNotaDecrescente() {
         // TODO: Você precisa implementar este método. Apague estas linhas e escreva o código correto.
         return null;
+    }
+
+    /*
+    * exibindo os estudantes
+    * */
+    private void exibirEstudantes(String titulo, List<Estudante> estudantes) {
+        System.out.println("\n".concat(titulo));
+        System.out.printf("%-20s %-20s %-10s%n", "Nome", "Curso", "Nota");
+        System.out.println("----------------------------------------------------------");
+        for (Estudante estudante : estudantes) {
+            System.out.printf("%-20s %-20s %-10.2f%n",
+                    estudante.getNome(),
+                    estudante.getCurso().getNome(),
+                    estudante.getNota());
+        }
     }
 }
