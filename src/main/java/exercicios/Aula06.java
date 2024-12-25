@@ -47,6 +47,9 @@ public class Aula06 extends Aula {
                 getEstudantesMulheresAprovadasOrdenadasPorCursoAndNota());
         exibirEstudantes("Mulheres Aprovadas Ordenadas Por Curso Decrescente e Nota Crescente:",
                 getEstudantesMulheresAprovadasOrdenadasPorCursoDecrescenteAndNotaCrescente());
+        exibirEstudantes(
+                " Estudantes Mulheres Aprovadas Nao Ordenadas Modificavel:",
+                getEstudantesMulheresAprovadasNaoOrdenadasModificavel());
     }
 
     /**
@@ -108,7 +111,8 @@ public class Aula06 extends Aula {
      */
     public List<Estudante> getEstudantesMulheresAprovadasNaoOrdenadasModificavel() {
         // TODO: Você precisa implementar este método. Apague estas linhas e escreva o código correto.
-        return null;
+        // Lembrete: getEstudantesMulheresAprovadas().stream().toList() nao me garante uma lista mutavel;
+        return new ArrayList<>(getEstudantesMulheresAprovadas());
     }
 
     /**
