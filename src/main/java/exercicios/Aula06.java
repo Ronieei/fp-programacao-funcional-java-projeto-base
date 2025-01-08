@@ -50,6 +50,10 @@ public class Aula06 extends Aula {
         exibirEstudantes(
                 " Estudantes Mulheres Aprovadas Nao Ordenadas Modificavel:",
                 getEstudantesMulheresAprovadasNaoOrdenadasModificavel());
+        exibirEstudantes(" Estudantes Mulheres Aprovadas Ordenadas Totalmente Decrescente: ",
+                getEstudantesMulheresAprovadasOrdenadasTotalmenteDecrescente());
+        exibirEstudantes("Estudantes Mulheres Aprovadas Ordenadas PorCurso CrescenteAndNota Decrescente",
+                getEstudantesMulheresAprovadasOrdenadasPorCursoCrescenteAndNotaDecrescente());
     }
 
     /**
@@ -123,7 +127,12 @@ public class Aula06 extends Aula {
      */
     public List<Estudante> getEstudantesMulheresAprovadasOrdenadasTotalmenteDecrescente() {
         // TODO: Você precisa implementar este método. Apague estas linhas e escreva o código correto.
-        return null;
+        return getEstudantesMulheresAprovadas()
+                .stream()
+                .sorted(Comparator.comparing(Estudante::getCurso).reversed()
+                        .thenComparing(Comparator.comparing(Estudante::getNota)
+                                .reversed()))
+                .collect(Collectors.toUnmodifiableList());
     }
 
     /**
@@ -134,7 +143,11 @@ public class Aula06 extends Aula {
      */
     public List<Estudante> getEstudantesMulheresAprovadasOrdenadasPorCursoCrescenteAndNotaDecrescente() {
         // TODO: Você precisa implementar este método. Apague estas linhas e escreva o código correto.
-        return null;
+        return getEstudantesMulheresAprovadas().stream()
+                .sorted(Comparator.comparing(Estudante::getCurso)
+                                .thenComparing(Comparator.comparing(Estudante::getNota)
+                                        .reversed()))
+                .collect(Collectors.toUnmodifiableList());
     }
 
     /*
